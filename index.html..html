@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d25">
+<title>To infinity & beyond, Lili ✨</title>
+<style>
+  :root { color-scheme: dark; --night:#080d25; --rose:#ffb9d2; --gold:#f8dfaa; --soft:#dbe2ff; }
+  * { box-sizing: border-box; }
+  html { min-height: 100%; }
+  body {
+    margin:0; min-height:100vh; color:#f9f5ff;
+    font-family: ui-serif, Georgia, "Times New Roman", serif;
+    background:
+      radial-gradient(ellipse at 18% 16%, rgba(74,92,166,.28), transparent 42%),
+      radial-gradient(ellipse at 85% 35%, rgba(117,54,124,.23), transparent 38%),
+      linear-gradient(180deg,#080d25 0%,#111735 52%,#17142f 100%);
+    overflow-x:hidden;
+  }
+  #stars { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .wrap { position:relative; z-index:1; width:min(720px,100%); margin:auto; padding:28px 18px 56px; }
+  .topline { text-align:center; color:var(--gold); letter-spacing:.22em; text-transform:uppercase; font: 10px/1.8 system-ui,sans-serif; }
+  .hero { min-height:68vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:42px 8px 30px; }
+  .moon { font-size:46px; filter:drop-shadow(0 0 18px rgba(255,232,190,.45)); margin-bottom:18px; }
+  h1 { font-size:clamp(2.6rem,10vw,5rem); line-height:1.02; font-weight:400; margin:0; letter-spacing:-.04em; }
+  h1 span { color:var(--rose); font-style:italic; }
+  .sub { max-width:440px; color:#d7ddf6; line-height:1.8; font-size:1.03rem; margin:22px auto 28px; }
+  button { border:1px solid rgba(255,217,232,.65); color:#29152b; background:linear-gradient(135deg,#ffdce8,#f2b2d0); border-radius:999px; padding:15px 23px; font:600 14px system-ui,sans-serif; cursor:pointer; box-shadow:0 0 28px rgba(255,166,205,.16); transition:transform .2s, box-shadow .2s; }
+  button:hover { transform:translateY(-2px); box-shadow:0 0 35px rgba(255,166,205,.3); }
+  button:focus-visible, input:focus-visible { outline:3px solid var(--gold); outline-offset:4px; }
+  .hint { font:12px system-ui,sans-serif; color:#aeb8e0; margin-top:14px; }
+  .letter { display:none; animation:rise .9s ease both; }
+  .letter.show { display:block; }
+  .panel { background:rgba(19,25,58,.78); border:1px solid rgba(206,216,255,.2); border-radius:24px; padding:clamp(22px,6vw,38px); box-shadow:0 18px 60px rgba(0,0,0,.18); backdrop-filter:blur(8px); }
+  h2 { font-weight:400; font-size:clamp(1.8rem,7vw,2.5rem); text-align:center; color:var(--rose); margin:0 0 22px; }
+  .letter p { color:#eef0ff; font-size:1.04rem; line-height:1.95; margin:0 0 16px; }
+  .signature { color:var(--rose)!important; font-style:italic; font-size:1.35rem!important; text-align:center; margin-top:25px!important; }
+  .photo-area { margin:20px 0 0; text-align:center; }
+  .photo-frame { border:1px dashed rgba(255,217,232,.5); border-radius:18px; min-height:170px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:rgba(255,255,255,.035); }
+  .photo-frame img { display:none; width:100%; max-height:430px; object-fit:cover; }
+  .photo-placeholder { padding:24px; color:#c7cdec; font:13px/1.8 system-ui,sans-serif; }
+  .photo-area label { display:inline-block; margin-top:13px; color:#f4cfe0; font:13px system-ui,sans-serif; cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+  #photoInput { position:absolute; width:1px; height:1px; opacity:0; }
+  .song { margin-top:18px; padding:18px; border-radius:18px; border:1px solid rgba(206,216,255,.17); text-align:center; color:#d7ddf6; font:13px/1.7 system-ui,sans-serif; }
+  .song audio { width:100%; margin-top:10px; }
+  .song input[type=file] { display:block; max-width:100%; margin:12px auto 0; font-size:12px; }
+  .footer { text-align:center; color:#9da8d2; font:11px/1.8 system-ui,sans-serif; margin-top:28px; }
+  .tiny-stars { color:var(--gold); letter-spacing:.6em; text-align:center; margin:25px 0; }
+  .float-heart { position:fixed; z-index:5; pointer-events:none; bottom:-30px; animation:floatUp 3.5s ease-in forwards; }
+  @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes floatUp { to { transform:translateY(-110vh) rotate(25deg); opacity:0; } }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<main class="wrap">
+  <div class="topline">A little universe, just for you</div>
+  <section class="hero">
+    <div class="moon" aria-hidden="true">☾ ✦</div>
+    <h1>For you,<br><span>Lili</span></h1>
+    <p class="sub">Some things are bigger than the stars. There’s something I want you to read, from my heart to yours.</p>
+    <button id="revealBtn" type="button">Open your little surprise ✨</button>
+    <div class="hint">Take your time. This is just for you. ♡</div>
+  </section>
+
+  <section class="letter" id="letter" aria-live="polite">
+    <div class="panel">
+      <h2>My love, my Lili ♡</h2>
+      <p>I’m sorry for not always being the smartest. I’m sorry for upsetting you and for the things I’ve done wrong. I know saying sorry doesn’t fix everything, and I don’t expect words alone to make things right.</p>
+      <p>I really want to make things right this time. I want to learn, grow, and show you through my actions that I’m genuine about changing. I want us forever, and I know that means being patient, listening, and doing the work—not just promising it.</p>
+      <p>Please forgive me for all my wrongdoings, when and if you’re ready. I love you to infinity and beyond. ❤️</p>
+      <p>Will you please allow me to take you out on a date? <strong>5 PM?</strong> Let me show you I’m genuine about change. No pressure—I just want the chance to spend time with you and let my actions speak.</p>
+      <p class="signature">Te amo, con todo mi corazón y alma. ❤️</p>
+      <div class="tiny-stars">✧ ⋆ ✦ ⋆ ✧</div>
+      <div class="photo-area">
+        <div class="photo-frame">
+          <img id="photoPreview" alt="A favorite photo of us together">
+          <div class="photo-placeholder" id="photoPlaceholder">Our favorite memory goes here ✨<br>Add a photo of the two of you below.</div>
+        </div>
+        <label for="photoInput">Add our photo ♡</label>
+        <input id="photoInput" type="file" accept="image/*">
+      </div>
+      <div class="song">
+        <div>🎵 A song for this little moment</div>
+        <div>Choose an audio file from your phone to play it here. The song won’t be included in the published link unless you also upload the audio file with the site.</div>
+        <input id="songInput" type="file" accept="audio/*" aria-label="Choose a song audio file">
+        <audio id="audioPlayer" controls hidden></audio>
+      </div>
+    </div>
+  </section>
+  <div class="footer">Made with love, under the same sky. ✦<br>One small page, with a whole lot of heart.</div>
+</main>
+<script>
+(() => {
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function seedStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = innerWidth * dpr;
+    canvas.height = innerHeight * dpr;
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    stars = Array.from({length: Math.min(180, Math.floor(innerWidth*innerHeight/6500))}, () => ({
+      x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+      r: Math.random()*1.25+.25, a: Math.random()*.55+.2
+    }));
+    drawStars();
+  }
+  function drawStars() {
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    for (const s of stars) {
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,244,224,${s.a})`; ctx.fill();
+    }
+  }
+  seedStars();
+  window.addEventListener('resize', seedStars);
+  document.getElementById('revealBtn').addEventListener('click', () => {
+    document.getElementById('letter').classList.add('show');
+    document.getElementById('revealBtn').textContent = 'Your surprise is open ♡';
+    document.getElementById('revealBtn').disabled = true;
+    for (let i=0; i<16; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'float-heart';
+      heart.textContent = ['♡','♥','✦','✨'][Math.floor(Math.random()*4)];
+      heart.style.left = (Math.random()*95)+'vw';
+      heart.style.color = ['#ffc3dc','#f8dfaa','#e4d7ff'][i%3];
+      heart.style.fontSize = (14+Math.random()*18)+'px';
+      heart.style.animationDelay = (Math.random()*.9)+'s';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4500);
+    }
+    document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  document.getElementById('photoInput').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = document.getElementById('photoPreview');
+      img.src = reader.result; img.style.display = 'block';
+      document.getElementById('photoPlaceholder').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+  let songUrl = null;
+  document.getElementById('songInput').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (songUrl) URL.revokeObjectURL(songUrl);
+    songUrl = URL.createObjectURL(file);
+    const audio = document.getElementById('audioPlayer');
+    audio.src = songUrl; audio.hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
